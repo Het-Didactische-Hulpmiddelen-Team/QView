@@ -3,20 +3,60 @@
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
         <link rel="stylesheet" media="all" href="css/simple.css">
-        <link rel="stylesheet" media="all" href="css/bootstrap.css">
         <link rel="stylesheet" media="all" href="css/styles.css">
         <title>Q-View</title>  
     </head>
     <body>
         <header>
-
+            <img src="img/logo.PNG" alt="logo">
+            <div class="dropdown">
+                <span>Q-Rooms</span>
+                <div class="dropdown-content">
+                    <a href="">VGO - F. Vogels - C207</a>
+                    <a href="">PVM - F. Vogels - C180</a>
+                    <a href="">TDM - D. Trumpsteen - C009</a>
+                </div>
+            </div>
+            <button id="signout">Sign in as another student</button>
         </header>
         <main>
-
+            <div id="rooms-list-div">
+                <h2>Click a Q-Room to see the queue and/or add yourself to the queue!</h1>
+                <ul id="rooms-list">
+                    <li>
+                        <p>
+                            VGO   |   Fréderik Vogels   |   C207
+                        </p>
+                        <button id="join-1">Join &raquo;</button>
+                    </li>
+                    <li>
+                        <p>
+                            PVM   |   Fréderik Vogels   |   D180
+                        </p>
+                        <button id="join-2">Join &raquo;</button>
+                    </li>
+                    <li>
+                        <p>
+                            TDM   |   Dolan TrumpSteen   |   C009
+                        </p>
+                        <button id="join-3">Join &raquo;</button>
+                    </li>
+                </ul>
+            </div>
         </main>
-        
+
+        <!-- LOGIN MODAL -->
+        <div id="modal-login" class="modal">
+            <div class="login-content">
+                <form id="login-form">
+                    <label for="login-name">Enter your name here:</label>
+                    <input type="name" id="login-name" required placeholder="John Doe"/>
+                    <button class="login-button">Proceed</button>
+                </form>
+            </div>
+        </div>
+
         <script type="text/javascript" src="js/jquery.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
