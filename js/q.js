@@ -40,7 +40,7 @@ function draw(){
     var second = document.querySelector('#secondSix');
     drawHelper(0, 6, first);
     drawHelper(6, 12, second);
-    
+
     if(length < 7){
         document.querySelector('#q').style.display = 'block';
         document.querySelector('#vert-divider').style.display = 'none';
@@ -54,12 +54,13 @@ function drawHelper(start, end, parent){
         var span = document.createElement('span');
         span.textContent = (i+1)+": " + q[i];
         length < 7 ? span.className = "diff span" : span.className = "span";
-
-        var btn = document.createElement('button');
-        btn.className = "close-popup no-margin";
-        btn.innerHTML = "&times;";
-        btn.id = q[i];
-        btn.onclick = deleteFromQueue;
+        if(auth){
+            var btn = document.createElement('button');
+            btn.className = "close-popup no-margin";
+            btn.innerHTML = "&times;";
+            btn.id = q[i];
+            btn.onclick = deleteFromQueue;
+        }
 
         span.append(btn);
         parent.append(span);
