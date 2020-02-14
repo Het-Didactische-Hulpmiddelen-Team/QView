@@ -10,22 +10,34 @@
             <img id="logo" src="img/logo.PNG" alt="logo">
             <div class="dropdown">
                 <span>Q-Rooms</span>
-                <div id="qrooms-dropdown" class="dropdown-content">
-                    <a href="">VGO - F. Vogels - C207</a>
-                    <a href="">PVM - F. Vogels - C180</a>
-                    <a href="">TDM - D. Trumpsteen - C009</a>
+                <div  id="qrooms-dropdown" class="dropdown-content">
+
                 </div>
             </div>
             <div id="create-qroom"></div>
             <button id="signout">Sign in as another user</button>
         </header>
         <main>
-            <div id="rooms-list-div">
-                <h2>Click a Q-Room to see the queue and/or add yourself to the queue!</h1>
-                <ul id="rooms-list">
-                    
-                </ul>
+            <h2>Delete a Q-Room!</h2>
+            <div id="center-pls">
+                <select id="all-rooms-for-delete" placeholder="Select Q-Room">
+
+                </select>
+                <button id="delete-room">Delete Q-Room</button>
             </div>
+        
+            <hr class="divider">
+
+            <h2>Add a Q-Room!</h2>
+            <form id="add-qroom">
+                <label for="add-room-course">Course:</label>
+                <input type="text" id="add-room-course" required placeholder="PVM, VGO, Netwerken, ..."/>
+                <label for="add-room-lector">Lector:</label>
+                <input type="name" id="add-room-lector" required placeholder="F. Vogels">
+                <label for="add-room-classroom">Classroom:</label>
+                <input type="text" id="add-room-classroom" required placeholder="C207">
+                <button>Create Q-Room</button>
+            </form>
         </main>
 
         <!-- LOGIN MODAL -->
@@ -48,6 +60,6 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/Cookies.js"></script>
         <script type="text/javascript" src="js/header.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/manage.js"></script>
     </body>
 </html>
