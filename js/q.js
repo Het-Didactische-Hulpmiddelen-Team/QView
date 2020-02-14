@@ -4,26 +4,26 @@ var auth = false;
 var q = [];
 
 $(document).ready( _ => {
-    $.get(url+"/isAuthenticated", res => auth = res);
-    $.get(url+"/room/queue/"+id, function( data ) {
-        var queue = document.querySelector('#q');
-        for(var i = 0; i < data.length; i++){
-            length++;
-            q.push(data[i]);
-        }
-        $.get(url+"/room/get/"+id, data => {
-            var str = data.vak+"   |   "+data.lector+"   |   "+data.lokaal;
-            document.querySelector('#amount-in-q').innerHTML = 
-            str+" (<strong>" + length + "</strong> in queue)";
-        });
-        // DONT SHOW BUTTONS IF AUTH USER, BIGGER FONT FOR PROJECTION
-        if(auth){
-            document.querySelector('#div-q-head-buttons').innerHTML = "";
-            document.querySelector("#div-q-head").style.fontSize = "2em";
-            document.querySelector("#div-q-head").style.textAlign = "center";
-
-        }
-        draw(); // SHOW FIRST PPL IN QUEUE
+    $.get(url+"/isAuthenticated", res => {
+        auth = res;
+        $.get(url+"/room/queue/"+id, function( data ) {
+            for(var i = 0; i < data.length; i++){
+                length++;
+                q.push(data[i]);
+            }
+            $.get(url+"/room/get/"+id, data => {
+                var str = data.vak+"   |   "+data.lector+"   |   "+data.lokaal;
+                document.querySelector('#amount-in-q').innerHTML = 
+                str+" (<strong>" + length + "</strong> in queue)";
+            });
+            // DONT SHOW BUTTONS IF AUTH USER, BIGGER FONT FOR PROJECTION
+            if(auth){
+                document.querySelector('#div-q-head-buttons').innerHTML = "";
+                document.querySelector("#div-q-head").style.fontSize = "2em";
+                document.querySelector("#div-q-head").style.textAlign = "center";
+            }
+            draw(); // SHOW FIRST PPL IN QUEUE
+        } );
     } );
     document.querySelector('#enter-q').addEventListener('click', _ => {
         var nameToAdd = Cookies.get('name');
