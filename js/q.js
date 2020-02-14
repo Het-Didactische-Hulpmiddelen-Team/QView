@@ -60,9 +60,8 @@ function drawHelper(start, end, parent){
             btn.innerHTML = "&times;";
             btn.id = q[i];
             btn.onclick = deleteFromQueue;
+            span.append(btn);
         }
-
-        span.append(btn);
         parent.append(span);
     }
 }
