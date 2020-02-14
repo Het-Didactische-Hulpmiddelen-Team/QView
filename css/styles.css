@@ -89,6 +89,7 @@ body{
 }
 strong{
     font-family: Arial, Helvetica, sans-serif;
+    color: #4070a8;
 }
 /* FORM FORM FORM FORM FORM FORM FORM FORM */
 form{
@@ -160,7 +161,7 @@ form input{
     background-color: transparent;
     border: none;
     color: red;
-    font-size: 2em;
+    font-size: 1em;
     top: 0;
     right: 0;
     position: absolute;
@@ -239,4 +240,77 @@ button:hover{
     background-color: white;
     color: #4070a8;
     cursor: pointer;
+}
+/* Q Q Q Q Q Q Q Q Q Q Q Q Q Q Q Q */
+h3{
+    padding: 5px 20px;
+}
+#div-q-head{
+    width: 70%;
+    min-width: 500px;
+    margin: 20px auto;
+    position: relative;
+    border: 1px solid #4070a8;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+}
+#div-q-head-buttons{
+    position: absolute;
+    top: 10;
+    right: 20;
+}
+#div-q-head-buttons button{
+    display: inline-block;
+}
+#enter-q:hover , #leave-q:hover{
+    background-color: white;
+}
+#enter-q{
+    background-color: green;
+}
+#leave-q{
+    background-color: red;
+}
+@media only screen and (max-width: 950px) {
+    #div-q-head{
+        text-align: center;
+    }
+    #div-q-head-buttons{
+        position: unset;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+}
+#q{
+    width: 95%;
+    padding: 0;
+    margin: 5px auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    position: relative;
+}
+#firstSix, #secondSix{
+    width: 95%;
+    margin: 5px auto;
+    text-align: center;
+}
+.span{
+    display: block;
+    background-color: white;
+    border: 1px solid #4070a8;
+    border-radius: 5px;
+    padding: 2% 0;
+    font-size: 2em;
+    margin-top: 5px;
+    position: relative;
+}
+.diff{
+    padding: 1.1% 0;
+}
+#vert-divider{
+    position: absolute;
+    top: 2.5%;
+    left: 50%;
+    height: 95%;
+    border: 1px solid #4070a8;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
 }
