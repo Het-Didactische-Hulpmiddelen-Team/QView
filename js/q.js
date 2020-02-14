@@ -19,7 +19,7 @@ $(document).ready( _ => {
         // DONT SHOW BUTTONS IF AUTH USER, BIGGER FONT FOR PROJECTION
         if(auth){
             document.querySelector('#div-q-head-buttons').innerHTML = "";
-            document.querySelector("#div-q-head").style.fontSize = "1.5em";
+            document.querySelector("#div-q-head").style.fontSize = "2em";
             document.querySelector("#div-q-head").style.textAlign = "center";
 
         }
@@ -38,30 +38,9 @@ $(document).ready( _ => {
 function draw(){
     var first = document.querySelector('#firstSix');
     var second = document.querySelector('#secondSix');
-    for(let i = 0; i < q.length && i < 6; i++){
-        var span = document.createElement('span');
-        span.textContent = (i+1)+": " + q[i];
-        length < 7 ? span.className = "diff span" : span.className = "span";
-
-        var btn = document.createElement('button');
-        btn.className = "close-popup no-margin";
-        btn.innerHTML = "&times;";
-        span.append(btn);
-        
-        first.append(span);
-    }
-    for(let i = 6; i < q.length && i < 12; i++){
-        var span = document.createElement('span');
-        span.textContent = (i+1)+": " + q[i];
-        length < 7 ? span.className = "diff span" : span.className = "span";
-
-        var btn = document.createElement('button');
-        btn.className = "close-popup no-margin";
-        btn.innerHTML = "&times;";
-        span.append(btn);
-
-        second.append(span);
-    }
+    drawHelper(0, 6, first);
+    drawHelper(6, 12, second);
+    
     if(length < 7){
         document.querySelector('#q').style.display = 'block';
         document.querySelector('#vert-divider').style.display = 'none';
@@ -69,4 +48,23 @@ function draw(){
         document.querySelector('#q').style.display = 'grid';
         document.querySelector('#vert-divider').style.display = 'block';
     }
+}
+function drawHelper(start, end, parent){
+    for(let i = start; i < q.length && i < end; i++){
+        var span = document.createElement('span');
+        span.textContent = (i+1)+": " + q[i];
+        length < 7 ? span.className = "diff span" : span.className = "span";
+
+        var btn = document.createElement('button');
+        btn.className = "close-popup no-margin";
+        btn.innerHTML = "&times;";
+        btn.id = q[i];
+        btn.onclick = deleteFromQueue;
+
+        span.append(btn);
+        parent.append(span);
+    }
+}
+function deleteFromQueue(){
+    $.get(url+"/room/leave/"+id+"/"+this.id);
 }
