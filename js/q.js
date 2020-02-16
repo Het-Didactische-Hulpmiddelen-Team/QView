@@ -1,18 +1,20 @@
-var id = localStorage.getItem("Q");
-var length = 0;
-var auth = false;
-var q = [];
+let id = localStorage.getItem("Q");
+let length = 0;
+let auth = false;
+let q = [];
+let webSocket;
 
 $(document).ready( _ => {
+    openSocket();
     $.get(url+"/isAuthenticated", res => {
         auth = res;
         $.get(url+"/room/queue/"+id, function( data ) {
-            for(var i = 0; i < data.length; i++){
+            for(let i = 0; i < data.length; i++){
                 length++;
                 q.push(data[i]);
             }
             $.get(url+"/room/get/"+id, data => {
-                var str = data.vak+"   |   "+data.lector+"   |   "+data.lokaal;
+                let str = data.vak+"   |   "+data.lector+"   |   "+data.lokaal;
                 document.querySelector('#amount-in-q').innerHTML = 
                 str+" (<strong>" + length + "</strong> in queue)";
             });
@@ -26,18 +28,22 @@ $(document).ready( _ => {
         } );
     } );
     document.querySelector('#enter-q').addEventListener('click', _ => {
-        var nameToAdd = Cookies.get('name');
-        $.get(url+"/room/join/"+id+"/"+nameToAdd);
+        let nameToAdd = Cookies.get('name');
+        webSocket.send(`${nameToAdd}-${id}-join`);
+        //$.get(url+"/room/join/"+id+"/"+nameToAdd);
     });
     document.querySelector('#leave-q').addEventListener('click', _ => {
-        var nameToRemove = Cookies.get('name');
-        $.get(url+"/room/leave/"+id+"/"+nameToRemove);
+        let nameToRemove = Cookies.get('name');
+        webSocket.send(`${nameToRemove}-${id}-leave`);
+        //$.get(url+"/room/leave/"+id+"/"+nameToRemove);
     });
 } );
 
 function draw(){
-    var first = document.querySelector('#firstSix');
-    var second = document.querySelector('#secondSix');
+    let first = document.querySelector('#firstSix');
+    let second = document.querySelector('#secondSix');
+    first.innerHTML = "";
+    second.innerHTML = "";
     drawHelper(0, 6, first);
     drawHelper(6, 12, second);
 
@@ -51,11 +57,11 @@ function draw(){
 }
 function drawHelper(start, end, parent){
     for(let i = start; i < q.length && i < end; i++){
-        var span = document.createElement('span');
+        let span = document.createElement('span');
         span.textContent = (i+1)+": " + q[i];
         length < 7 ? span.className = "diff span" : span.className = "span";
         if(auth){
-            var btn = document.createElement('button');
+            let btn = document.createElement('button');
             btn.className = "close-popup no-margin";
             btn.innerHTML = "&times;";
             btn.id = q[i];
@@ -67,4 +73,33 @@ function drawHelper(start, end, parent){
 }
 function deleteFromQueue(){
     $.get(url+"/room/leave/"+id+"/"+this.id);
+}
+
+function openSocket() {
+    webSocket = new WebSocket("ws://server.arne.tech:8080/echo");
+
+    webSocket.onopen = function (event) {
+        webSocket.send("open");
+    };
+
+    webSocket.onmessage = function (event) {
+        writeResponse(event.data);
+    };
+
+    webSocket.onclose = function (event) {
+        console.log("onclose");
+    };
+}
+
+function closeSocket() {
+    webSocket.close();
+}
+
+function writeResponse(text) {
+    let splittedText = text.split("-");
+    console.log(id,splittedText[1])
+    if(this.id = splittedText[1]){
+        q = splittedText[0].replace("[","").replace("]","").split(", ");
+        draw();
+    }    
 }

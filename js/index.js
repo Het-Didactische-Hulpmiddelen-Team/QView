@@ -1,12 +1,12 @@
-var ul = document.querySelector('#rooms-list');
+let ul = document.querySelector('#rooms-list');
 $(document).ready( _ => {
     $.get( url+"/room/all", function( data ) {
-        for(var i = 0; i < data.length; i++){
-            var li = document.createElement('li');
-            var p = document.createElement('p');
-            var button = document.createElement('button');
+        for(let i = 0; i < data.length; i++){
+            let li = document.createElement('li');
+            let p = document.createElement('p');
+            let button = document.createElement('button');
 
-            var roomname = data[i].vak + "   |   " + data[i].lector +
+            let roomname = data[i].vak + "   |   " + data[i].lector +
             "   |   " + data[i].lokaal;
             
             p.textContent = roomname;
