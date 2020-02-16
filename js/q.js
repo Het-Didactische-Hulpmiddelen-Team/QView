@@ -98,7 +98,7 @@ function closeSocket() {
 function writeResponse(text) {
     let splittedText = text.split("-");
     console.log(id,splittedText[1])
-    if(this.id = splittedText[1]){
+    if(id == splittedText[1]){
         q = splittedText[0].replace("[","").replace("]","").split(", ");
         document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
         length = q.length;
