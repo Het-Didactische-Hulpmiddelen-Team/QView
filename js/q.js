@@ -3,6 +3,7 @@ let length = 0;
 let auth = false;
 let q = [];
 let webSocket;
+let lector,vak,lokaal;
 
 $(document).ready( _ => {
     openSocket();
@@ -14,9 +15,10 @@ $(document).ready( _ => {
                 q.push(data[i]);
             }
             $.get(url+"/room/get/"+id, data => {
-                let str = data.vak+"   |   "+data.lector+"   |   "+data.lokaal;
-                document.querySelector('#amount-in-q').innerHTML = 
-                str+" (<strong>" + length + "</strong> in queue)";
+                lector = data.lector;
+                vak = data.vak;
+                lokaal = data.lokaal;
+                document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
             });
             // DONT SHOW BUTTONS IF AUTH USER, BIGGER FONT FOR PROJECTION
             if(auth){
@@ -30,12 +32,10 @@ $(document).ready( _ => {
     document.querySelector('#enter-q').addEventListener('click', _ => {
         let nameToAdd = Cookies.get('name');
         webSocket.send(`${nameToAdd}-${id}-join`);
-        //$.get(url+"/room/join/"+id+"/"+nameToAdd);
     });
     document.querySelector('#leave-q').addEventListener('click', _ => {
         let nameToRemove = Cookies.get('name');
         webSocket.send(`${nameToRemove}-${id}-leave`);
-        //$.get(url+"/room/leave/"+id+"/"+nameToRemove);
     });
 } );
 
@@ -46,7 +46,6 @@ function draw(){
     second.innerHTML = "";
     drawHelper(0, 6, first);
     drawHelper(6, 12, second);
-
     if(length < 7){
         document.querySelector('#q').style.display = 'block';
         document.querySelector('#vert-divider').style.display = 'none';
@@ -72,7 +71,7 @@ function drawHelper(start, end, parent){
     }
 }
 function deleteFromQueue(){
-    $.get(url+"/room/leave/"+id+"/"+this.id);
+    webSocket.send(`${this.id}-${id}-leave`);
 }
 
 function openSocket() {
@@ -100,6 +99,8 @@ function writeResponse(text) {
     console.log(id,splittedText[1])
     if(this.id = splittedText[1]){
         q = splittedText[0].replace("[","").replace("]","").split(", ");
+        document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
+        length = q.length;
         draw();
     }    
 }
