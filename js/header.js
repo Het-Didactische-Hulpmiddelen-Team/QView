@@ -1,17 +1,17 @@
 let name = "";
 let url = "http://server.arne.tech:8080";
 $(document).ready( _ => {
-    name = decodeURIComponent(document.cookie).split(';')[0].split("=")[1];
-    if(name == "undefined"){
+    name = Cookies.get("name");
+    if(typeof name == "undefined"){
         $('#modal-login').css('display', 'block');
     }
     createAndShowCreateQroom();
     let loginform = document.querySelector('#login-form');
     loginform.addEventListener('submit', e => {
         e.preventDefault();
-        let namee = loginform['login-name'].value.trim();
-        if (namee.length < 1) return; // U NEED TO HAVE A USERNAME
-        Cookies.set('name', namee);
+        let newName = loginform['login-name'].value.trim();
+        if (newName.length < 1) return; // U NEED TO HAVE A USERNAME
+        Cookies.set('name', newName);
         location.reload();
     });
     let loginformadmin = document.querySelector('#login-form-admin');

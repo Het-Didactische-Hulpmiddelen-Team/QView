@@ -45,6 +45,7 @@ function draw(){
     let second = document.querySelector('#secondSix');
     first.innerHTML = "";
     second.innerHTML = "";
+
     drawHelper(0, 6, first);
     drawHelper(6, 12, second);
     if(length < 7){
@@ -97,11 +98,11 @@ function closeSocket() {
 
 function writeResponse(text) {
     let splittedText = text.split("-");
-    console.log(id,splittedText[1])
     if(id == splittedText[1]){
         q = splittedText[0].replace("[","").replace("]","").split(", ");
-        document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
+        if(q[0] == "") q.pop();
         length = q.length;
+        document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
         draw();
     }    
 }
