@@ -21,7 +21,7 @@ $(document).ready( _ => {
         let password = loginformadmin['login-admin-password'].value.trim();
         if (username.length < 1) return;
         if (password.length < 1) return; // FIELDS MAY NOT BE EMPTY
-        Cookies.set("name", username)
+        Cookies.set("name", username);
         $.get(url + "/authenticate", data => {
             location.reload();
         });
@@ -67,7 +67,8 @@ function createAndShowCreateQroom(){
 }
 
 function redirectHelper(clicked) { 
-    localStorage.setItem("Q",this.id);
+    //localStorage.setItem("Q",this.id);
+    Cookies.set("id", this.id);
     document.location.href = "q.html";
 }  
 

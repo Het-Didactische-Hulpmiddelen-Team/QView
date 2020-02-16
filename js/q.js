@@ -1,4 +1,5 @@
-let id = localStorage.getItem("Q");
+//let id = localStorage.getItem("Q");
+let id = Cookies.get("id", this.id);
 let length = 0;
 let auth = false;
 let q = [];
