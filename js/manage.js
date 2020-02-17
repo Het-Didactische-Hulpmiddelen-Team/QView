@@ -4,8 +4,7 @@ $(document).ready( _ => {
         e.preventDefault();
         let sel = document.querySelector('#all-rooms-for-delete');
         let id = sel.options[sel.selectedIndex].value;
-        $.get(url + "/room/delete/"+id);
-        location.reload();
+        $.get(url + "/room/delete/"+id, _ => location.reload());
     });
     let addqroomform = document.querySelector('#add-qroom');
     addqroomform.addEventListener('submit', e => {
