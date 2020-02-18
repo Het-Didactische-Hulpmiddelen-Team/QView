@@ -5,9 +5,11 @@ let auth = false;
 let q = [];
 let webSocket;
 let lector,vak,lokaal;
+let position = 0;
 
 $(document).ready( _ => {
     openSocket();
+    getPosition();    
     $.get(url+"/isAuthenticated", res => {
         auth = res;
         $.get(url+"/room/queue/"+id, function( data ) {
@@ -31,12 +33,12 @@ $(document).ready( _ => {
         } );
     } );
     document.querySelector('#enter-q').addEventListener('click', _ => {
-        let nameToAdd = Cookies.get('name');
-        webSocket.send(`${nameToAdd}-${id}-join`);
+        webSocket.send(`${name}-${id}-join`);
+        getPosition();
     });
     document.querySelector('#leave-q').addEventListener('click', _ => {
-        let nameToRemove = Cookies.get('name');
-        webSocket.send(`${nameToRemove}-${id}-leave`);
+        webSocket.send(`${name}-${id}-leave`);
+        getPosition();
     });
 } );
 
@@ -59,7 +61,12 @@ function draw(){
 function drawHelper(start, end, parent){
     for(let i = start; i < q.length && i < end; i++){
         let span = document.createElement('span');
-        span.textContent = (i+1)+": " + q[i];
+        if(i == 11 && position > 12){
+            span.textContent = (position)+": " + name;
+        }
+        else{
+            span.textContent = (i+1)+": " + q[i];
+        }
         length < 7 ? span.className = "diff span" : span.className = "span";
         if(auth){
             let btn = document.createElement('button');
@@ -97,12 +104,19 @@ function closeSocket() {
 }
 
 function writeResponse(text) {
-    let splittedText = text.split("-");
+    let splittedText = text.split("-");    
     if(id == splittedText[1]){
         q = splittedText[0].replace("[","").replace("]","").split(", ");
+        position = splittedText[2];
         if(q[0] == "") q.pop();
         length = q.length;
         document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
         draw();
-    }    
+    }
+}
+
+function getPosition(){
+    $.get(`${url}/room/position/${id}/${name}`, data => {
+        position = data;
+    });
 }
