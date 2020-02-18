@@ -8,6 +8,7 @@ let lector,vak,lokaal;
 let position = 0;
 
 $(document).ready( _ => {
+    name = Cookies.get("name", this.name);
     openSocket();
     getPosition();    
     $.get(url+"/isAuthenticated", res => {
@@ -33,16 +34,17 @@ $(document).ready( _ => {
         } );
     } );
     document.querySelector('#enter-q').addEventListener('click', _ => {
-        webSocket.send(`${name}-${id}-join`);
         getPosition();
+        webSocket.send(`${name}-${id}-join`);
     });
     document.querySelector('#leave-q').addEventListener('click', _ => {
-        webSocket.send(`${name}-${id}-leave`);
         getPosition();
+        webSocket.send(`${name}-${id}-leave`);
     });
 } );
 
 function draw(){
+    getPosition(); 
     let first = document.querySelector('#firstSix');
     let second = document.querySelector('#secondSix');
     first.innerHTML = "";
@@ -104,19 +106,16 @@ function closeSocket() {
 }
 
 function writeResponse(text) {
-    let splittedText = text.split("-");    
+    let splittedText = text.split("-"); 
     if(id == splittedText[1]){
         q = splittedText[0].replace("[","").replace("]","").split(", ");
-        position = splittedText[2];
-        if(q[0] == "") q.pop();
+                if(q[0] == "") q.pop();
         length = q.length;
         document.querySelector('#amount-in-q').innerHTML = `${vak}   |   ${lector}   |   ${lokaal} (<strong>${q.length}</strong> in queue)`;
-        draw();
     }
+    draw();
 }
 
 function getPosition(){
-    $.get(`${url}/room/position/${id}/${name}`, data => {
-        position = data;
-    });
+    position = q.indexOf(name) + 1;
 }
