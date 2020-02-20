@@ -22,8 +22,17 @@ $(document).ready( _ => {
         if (username.length < 1) return;
         if (password.length < 1) return; // FIELDS MAY NOT BE EMPTY
         Cookies.set("name", username);
-        $.get(url + "/authenticate", data => {
-            location.reload();
+        let body = '{ "name": "'+username+'", "password": "'+password+'"}';
+        $.ajax({
+            beforeSend: function(xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader("Accept", "application/json");
+            },
+            url: url + "/authenticate",                                                                                    
+            type: "POST",
+            datatype: "json",
+            data: body,
+            success: e => {location.reload()}
         });
     });
     document.querySelector('#signout').addEventListener('click', e => {
