@@ -1,5 +1,7 @@
 let name = "";
 let url = "http://server.arne.tech:8080";
+let ws = "ws://server.arne.tech:8080/echo";
+
 $(document).ready( _ => {
     name = Cookies.get("name");
     if(typeof name == "undefined"){

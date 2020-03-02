@@ -32,7 +32,7 @@ $(document).ready( _ => {
 
 function loadAllRoomsInDelete(){
     let select = document.querySelector('#all-rooms-for-delete');
-    $.get( "http://server.arne.tech:8080/room/all", function( data ) {
+    $.get(url + "/room/all", function( data ) {
         for(let i = 0; i < data.length; i++){
             let roomname = data[i].vak + "   |   " + data[i].lector +
             "   |   " + data[i].lokaal;

@@ -86,7 +86,7 @@ function deleteFromQueue(){
 }
 
 function openSocket() {
-    webSocket = new WebSocket("ws://server.arne.tech:8080/echo");
+    webSocket = new WebSocket(ws);
 
     webSocket.onopen = function (event) {
         webSocket.send("open");
